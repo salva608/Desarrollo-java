@@ -1,4 +1,3 @@
-// Cambiamos 'class' por 'record'
 public record EmpresaRecord(String nombre, String nit, int anioFundacion) {
     /*
      * Record:
