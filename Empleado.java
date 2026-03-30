@@ -19,21 +19,4 @@ public class Empleado {
         this.esActivo = esActivo;
         this.nombre = nombre;
     }
-
-    public double calcularSalarioFinal() {
-        salarioTotal = (salarioBase + (bonoMensual * 1.10)) - (salarioBase * 0.05);
-        return salarioTotal;
-    }
-
-    public boolean bonoExtraPorID() {
-        return (idEmpleado % 2 == 0);
-    }
-
-    public boolean validarElegibilidad(int puntajeTest, int edad, int idSede) {
-        return (puntajeTest > 85 && edad < 30) || (idSede == 1 && !esActivo);
-    }
-
-    public void actualizarBono(float incremento) {
-        bonoMensual += incremento;
-    }
 }
