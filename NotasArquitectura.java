@@ -1,4 +1,4 @@
-package HU1;
+
 
 public class NotasArquitectura {
        /*
