@@ -1,1 +1,8 @@
-*.class
+<<<<<<*.class
+      .idea/
+      *.iml
+      *.iws
+      *.ipr
+      target/
+      .DS_Store
+      Thumbs.db
