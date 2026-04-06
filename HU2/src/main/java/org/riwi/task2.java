@@ -10,29 +10,53 @@ public class task2 {
         var option = 0;
         String nombre = "";
 
-        // Listas para almacenar datos
         ArrayList<String> empleados = new ArrayList<>();
         ArrayList<Double> salarios = new ArrayList<>();
 
         do {
-            System.out.println("\n1. Registrar usuario");
+            System.out.println("1. Registrar usuario");
             System.out.println("2. Listar usuarios");
             System.out.println("3. Salir");
             System.out.print("Selecciona una opcion: ");
 
-            option = reader.nextInt();
-            reader.nextLine();
+            try {
+                option = reader.nextInt();
+                reader.nextLine();
+            } catch (Exception e) {
+                System.out.println("Error: debes ingresar un número válido.");
+                reader.nextLine();
+                continue;
+            }
 
             switch (option) {
 
                 case 1:
                     System.out.print("Ingresa nombre: ");
                     nombre = reader.nextLine();
+
+                    if (nombre.isEmpty()) {
+                        System.out.println("El nombre no puede estar vacío.");
+                        break;
+                    }
+
                     empleados.add(nombre);
 
-                    System.out.print("Ingrese salario: ");
-                    double salario = reader.nextDouble();
-                    reader.nextLine();
+                    double salario;
+
+                    try {
+                        System.out.print("Ingrese salario: ");
+                        salario = reader.nextDouble();
+                        reader.nextLine();
+                    } catch (Exception e) {
+                        System.out.println("Error: salario inválido.");
+                        reader.nextLine();
+                        break;
+                    }
+
+                    if (salario <= 0) {
+                        System.out.println("El salario debe ser mayor a 0.");
+                        break;
+                    }
 
                     salarios.add(salario);
 
@@ -53,7 +77,8 @@ public class task2 {
                             double salarioEmp = salarios.get(i);
                             String categoriaEmp = obtenerCategoriaSalarial(salarioEmp);
 
-                            System.out.println("- " + nombreEmp + " | Salario: " + salarioEmp +
+                            System.out.println("- " + nombreEmp +
+                                    " | Salario: " + salarioEmp +
                                     " | Categoría: " + categoriaEmp);
                         }
                     }
@@ -73,7 +98,6 @@ public class task2 {
         reader.close();
     }
 
-    // 🔹 Switch moderno (Java 17+)
     public static String obtenerCategoriaSalarial(double salario) {
         return switch ((int) salario / 1000000) {
             case 0, 1 -> "Bajo";
