@@ -4,30 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-class Empleado {
-    String id;
-    String nombre;
-    double salario;
-
-    public Empleado(String id, String nombre, double salario) {
-        this.id = id;
-        this.nombre = nombre;
-        this.salario = salario;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id + ", Nombre: " + nombre + ", Salario: " + salario;
-    }
-}
-
 public class Main {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        var sc = new Scanner(System.in);
 
-        ArrayList<Empleado> listaEmpleados = new ArrayList<>();
-        HashMap<String, Empleado> mapaEmpleados = new HashMap<>();
+        var listaEmpleados = new ArrayList<Empleado>();
+        var mapaEmpleados = new HashMap<String, Empleado>();
 
         int opcion;
 
@@ -36,15 +19,18 @@ public class Main {
             System.out.println("2. Listar empleados");
             System.out.println("3. Eliminar empleado");
             System.out.println("4. Buscar empleado por ID");
+            System.out.println("5. Filtrar por puntaje (Task 4)");
+            System.out.println("6. Reporte (Task 4)");
             System.out.println("0. Salir");
+
             opcion = sc.nextInt();
             sc.nextLine();
 
             switch (opcion) {
 
-                case 1:
+                case 1 -> {
                     System.out.print("ID: ");
-                    String id = sc.nextLine();
+                    var id = sc.nextLine();
 
                     if (mapaEmpleados.containsKey(id)) {
                         System.out.println("El ID ya existe.");
@@ -52,35 +38,36 @@ public class Main {
                     }
 
                     System.out.print("Nombre: ");
-                    String nombre = sc.nextLine();
+                    var nombre = sc.nextLine();
 
                     System.out.print("Salario: ");
-                    double salario = sc.nextDouble();
+                    var salario = sc.nextDouble();
+
+                    System.out.print("Puntaje: ");
+                    var puntaje = sc.nextDouble();
                     sc.nextLine();
 
-                    Empleado nuevo = new Empleado(id, nombre, salario);
+                    var emp = new Empleado(id, nombre, salario, puntaje);
 
-                    listaEmpleados.add(nuevo);
-                    mapaEmpleados.put(id, nuevo);
+                    listaEmpleados.add(emp);
+                    mapaEmpleados.put(id, emp);
 
                     System.out.println("Empleado agregado.");
-                    break;
+                }
 
-                case 2:
+                case 2 -> {
                     if (listaEmpleados.isEmpty()) {
                         System.out.println("No hay empleados.");
                     } else {
-                        for (Empleado e : listaEmpleados) {
-                            System.out.println(e);
-                        }
+                        listaEmpleados.forEach(System.out::println);
                     }
-                    break;
+                }
 
-                case 3:
+                case 3 -> {
                     System.out.print("ID a eliminar: ");
-                    String idEliminar = sc.nextLine();
+                    var idEliminar = sc.nextLine();
 
-                    Empleado eliminado = mapaEmpleados.remove(idEliminar);
+                    var eliminado = mapaEmpleados.remove(idEliminar);
 
                     if (eliminado != null) {
                         listaEmpleados.remove(eliminado);
@@ -88,21 +75,45 @@ public class Main {
                     } else {
                         System.out.println("No existe ese ID.");
                     }
-                    break;
+                }
 
-                case 4:
+                case 4 -> {
                     System.out.print("ID a buscar: ");
-                    String idBuscar = sc.nextLine();
+                    var idBuscar = sc.nextLine();
 
-                    Empleado encontrado = mapaEmpleados.get(idBuscar);
+                    var encontrado = mapaEmpleados.get(idBuscar);
 
                     if (encontrado != null) {
                         System.out.println(encontrado);
                     } else {
                         System.out.println("Empleado no encontrado.");
                     }
-                    break;
+                }
 
+                // 🔥 TASK 4 → removeIf
+                case 5 -> {
+                    System.out.print("Puntaje mínimo: ");
+                    var min = sc.nextDouble();
+                    sc.nextLine();
+
+                    listaEmpleados.removeIf(e -> e.puntaje < min);
+                    System.out.println("Filtrado aplicado.");
+                }
+
+                // 🔥 TASK 4 → reporte
+                case 6 -> {
+                    var total = listaEmpleados.size();
+                    var suma = 0.0;
+
+                    for (var e : listaEmpleados) {
+                        suma += e.salario;
+                    }
+
+                    var promedio = total > 0 ? suma / total : 0;
+
+                    System.out.println("Total empleados: " + total);
+                    System.out.println("Promedio salarios: " + promedio);
+                }
             }
 
         } while (opcion != 0);
