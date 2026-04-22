@@ -1,4 +1,4 @@
-
+package org.riwi.talent.model;
 
 public class NotasArquitectura {
        /*

@@ -1,3 +1,9 @@
+package org.riwi.talent.controller;
+
+import org.riwi.talent.model.Empleado;
+
+import org.riwi.talent.model.Empleado;
+
 public class EmpleadoService {
     
     public double calcularSalarioFinal(Empleado emp) {

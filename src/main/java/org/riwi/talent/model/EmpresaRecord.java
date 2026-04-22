@@ -1,3 +1,5 @@
+package org.riwi.talent.model;
+
 public record EmpresaRecord(String nombre, String nit, int anioFundacion) {
     /*
      * Record:
