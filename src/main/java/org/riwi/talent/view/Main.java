@@ -1,42 +1,76 @@
 package org.riwi.talent.view;
 
-import org.riwi.talent.controller.EmpleadoService;
-import org.riwi.talent.model.Empleado;
-import org.riwi.talent.model.EmpresaRecord;
+import org.riwi.talent.util.DBConnection;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        String header = """
-            
-            CORPORATE TALENT HUB SYSTEM
-            
-            """;
-        System.out.println(header);
+        DBConnection.testConnection();
 
-        Empleado emp = new Empleado(2, 2000000L, 300000f, 'M', true, "Carlos");
-        EmpresaRecord empresa = new EmpresaRecord("Acme S.A.S", "900-123-456-7", 2005);
+        System.out.println("\n=== CORPORATE TALENT HUB v5.0 ===");
 
-        EmpleadoService service = new EmpleadoService();
+        boolean continuar = true;
+        while (continuar) {
+            mostrarMenuPrincipal();
+            int opcion = leerOpcion(scanner);
 
-        System.out.println(service.calcularSalarioFinal(emp));
-        System.out.println(service.bonoExtraPorID(emp));
-        System.out.println(service.validarElegibilidad(emp, 90, 28, 2));
-        System.out.println(empresa.nombre() + " | " + empresa.nit());
-
-        service.actualizarBono(emp, 50000f);
-
-        // Laboratorio de nulos
-        emp.nombre = null;
-        try {
-            System.out.println(emp.nombre.toUpperCase());
-        } catch (NullPointerException e) {
-            System.out.println("NPE: " + e.getMessage());
+            switch (opcion) {
+                case 1 -> ejecutarHU2(scanner);
+                case 2 -> ejecutarHU3(scanner);
+                case 3 -> ejecutarHU4(scanner);
+                case 4 -> ejecutarHU5(scanner);
+                case 0 -> { continuar = false; System.out.println("Hasta pronto"); }
+                default -> System.out.println("Opción inválida");
+            }
         }
-
-        // Comparación de referencias en Heap
-        Empleado emp2 = new Empleado(2, 2000000L, 300000f, 'M', true, "Carlos");
-        System.out.println("== : " + (emp == emp2));
+        scanner.close();
     }
 
+    private static void mostrarMenuPrincipal() {
+        System.out.println("\n=== MENÚ PRINCIPAL ===");
+        System.out.println("1. HU2 - Tipos de Datos");
+        System.out.println("2. HU3 - Operadores");
+        System.out.println("3. HU4 - Estructuras Control");
+        System.out.println("4. HU5 - CRUD JDBC");
+        System.out.println("0. Salir");
+        System.out.print("Opción: ");
+    }
+
+    private static int leerOpcion(Scanner scanner) {
+        try { return Integer.parseInt(scanner.nextLine()); }
+        catch (NumberFormatException e) { return -1; }
+    }
+
+    private static void ejecutarHU2(Scanner scanner) {
+        System.out.println("\n=== HU2 ===");
+        // TU CÓDIGO DE HU2 AQUÍ
+        esperarEnter(scanner);
+    }
+
+    private static void ejecutarHU3(Scanner scanner) {
+        System.out.println("\n=== HU3 ===");
+        // TU CÓDIGO DE HU3 AQUÍ
+        esperarEnter(scanner);
+    }
+
+    private static void ejecutarHU4(Scanner scanner) {
+        System.out.println("\n=== HU4 ===");
+        // TU CÓDIGO DE HU4 AQUÍ
+        esperarEnter(scanner);
+    }
+
+    private static void ejecutarHU5(Scanner scanner) {
+        System.out.println("\n=== HU5: CRUD JDBC ===");
+        DBConnection.testConnection();
+        MenuView menuView = new MenuView(scanner);
+        menuView.mostrarMenuCRUD();
+    }
+
+    private static void esperarEnter(Scanner scanner) {
+        System.out.print("\nPresione Enter...");
+        scanner.nextLine();
+    }
 }
